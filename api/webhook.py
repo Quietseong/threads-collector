@@ -95,14 +95,31 @@ def detect_platform(url):
 
 
 # ── 콘텐츠 추출 (범용 OG 태그) ───────────────────────
+def fetch_page(url, retries=2):
+    """URL에서 HTML 가져오기 (리다이렉트 + 재시도)"""
+    agents = [
+        "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)",
+    ]
+    for i in range(retries + 1):
+        try:
+            req = urllib.request.Request(url, headers={
+                "User-Agent": agents[i % len(agents)],
+                "Accept-Language": "ko-KR,ko;q=0.9,en;q=0.8",
+                "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+            })
+            with urllib.request.urlopen(req, timeout=15) as resp:
+                return resp.read(500_000).decode("utf-8", errors="ignore")
+        except urllib.error.HTTPError as e:
+            if e.code == 403 and i < retries:
+                continue
+            raise
+    return ""
+
+
 def extract_content(url):
-    req = urllib.request.Request(url, headers={
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
-        "Accept-Language": "ko-KR,ko;q=0.9,en;q=0.8",
-        "Accept": "text/html,application/xhtml+xml",
-    })
-    with urllib.request.urlopen(req, timeout=15) as resp:
-        raw = resp.read(500_000).decode("utf-8", errors="ignore")
+    raw = fetch_page(url)
 
     og = {}
     # OG + Twitter 메타 태그
