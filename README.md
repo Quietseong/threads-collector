@@ -110,78 +110,51 @@ https://api.telegram.org/bot<BOT_TOKEN>/setWebhook?url=https://<your-app>.vercel
 
 ### 5. Obsidian 동기화 (선택)
 
-수집된 노트를 Obsidian에서 보려면 로컬 PC에 Sync Daemon을 설정합니다.
+수집된 노트를 Obsidian에서 보려면 이 레포를 Obsidian 보관함으로 직접 사용합니다.
 
-#### sync_daemon.pyw 생성
+#### 방법: Git Clone → Obsidian 보관함으로 열기
 
-아무 폴더에 (예: `C:\Users\<user>\.threads-collector\`) `sync_daemon.pyw` 파일을 만듭니다:
+```bash
+# 1. Obsidian 보관함 경로에 clone
+git clone https://github.com/<username>/<repo-name>.git "<Obsidian 보관함 경로>"
 
-```python
-import json, os, sys, time, urllib.request, urllib.parse
-
-VAULT_DIR = r"<Obsidian vault 경로>\threads-archive"  # 수정
-REPO = "<username>/<repo-name>"                        # 수정
-PREFIX = "obsidian-vault/threads-archive/"
-INTERVAL = 300  # 5분
-
-def sync_once():
-    try:
-        req = urllib.request.Request(
-            f"https://api.github.com/repos/{REPO}/git/trees/main?recursive=1",
-            headers={"User-Agent": "sync"},
-        )
-        with urllib.request.urlopen(req, timeout=15) as resp:
-            tree = json.loads(resp.read().decode("utf-8"))
-        for item in tree.get("tree", []):
-            path = item.get("path", "")
-            if not path.startswith(PREFIX) or not path.endswith(".md"):
-                continue
-            rel = path[len(PREFIX):]
-            local = os.path.join(VAULT_DIR, rel)
-            if os.path.exists(local):
-                continue
-            os.makedirs(os.path.dirname(local), exist_ok=True)
-            encoded = "/".join(urllib.parse.quote(s, safe="") for s in path.split("/"))
-            raw_url = f"https://raw.githubusercontent.com/{REPO}/main/{encoded}"
-            with urllib.request.urlopen(urllib.request.Request(raw_url, headers={"User-Agent": "sync"}), timeout=10) as r:
-                content = r.read()
-            with open(local, "wb") as f:
-                f.write(content)
-    except Exception:
-        pass
-
-if __name__ == "__main__":
-    os.makedirs(VAULT_DIR, exist_ok=True)
-    while True:
-        sync_once()
-        time.sleep(INTERVAL)
+# 2. Obsidian에서 해당 폴더를 "보관함 열기"로 선택
 ```
 
-#### 시작 프로그램에 등록
+`.obsidianignore` 파일이 포함되어 있어 `api/`, `vercel.json` 등 코드 파일은 Obsidian에서 자동으로 숨겨집니다.
 
-Windows 시작 폴더 (`Win+R` → `shell:startup`)에 `threads-sync.vbs` 파일을 만듭니다:
+#### 동기화
 
-```vbs
-Set WshShell = CreateObject("WScript.Shell")
-WshShell.Run "pythonw.exe ""C:\Users\<user>\.threads-collector\sync_daemon.pyw""", 0, False
+새 노트가 수집되면 `git pull`로 가져옵니다:
+
+```bash
+cd "<Obsidian 보관함 경로>"
+git pull
 ```
 
-PC를 켤 때 자동으로 시작되며, Obsidian Sync가 있으면 모바일까지 동기화됩니다.
+자동화하려면 cron(macOS/Linux)이나 작업 스케줄러(Windows)에 등록하세요:
+
+```bash
+# macOS/Linux: 5분마다 자동 pull (crontab -e)
+*/5 * * * * cd "<Obsidian 보관함 경로>" && git pull --quiet
+```
+
+```powershell
+# Windows: 작업 스케줄러에 등록할 명령
+git -C "<Obsidian 보관함 경로>" pull --quiet
+```
+
+Obsidian Sync를 사용 중이라면 pull 후 자동으로 모바일/다른 기기에 전파됩니다.
 
 ## 알려진 제한사항
 
-**Obsidian 동기화에는 PC가 켜져 있어야 합니다.**
+**Obsidian 동기화에는 `git pull`이 필요합니다.**
 
-Telegram으로 링크를 보내면 수집, 분류, GitHub 저장, Telegram 답장은 **24시간 즉시 동작**합니다 (Vercel 서버리스). 하지만 GitHub에 저장된 노트를 Obsidian vault로 가져오는 Sync Daemon은 **로컬 PC에서 실행되므로, PC가 꺼져 있으면 Obsidian에 반영되지 않습니다.**
+Telegram으로 링크를 보내면 수집, 분류, GitHub 저장, Telegram 답장은 **24시간 즉시 동작**합니다 (Vercel 서버리스). Obsidian에 반영하려면 로컬에서 `git pull`을 실행해야 합니다 (수동 또는 cron/작업 스케줄러로 자동화).
 
-- PC가 꺼져 있는 동안 수집된 노트는 **유실되지 않습니다** (GitHub에 안전하게 보관)
-- PC를 켜면 Sync Daemon이 자동 시작되어 **밀린 노트를 한꺼번에 동기화**합니다
-- Telegram에서 분류 결과는 PC 상태와 무관하게 즉시 확인할 수 있습니다
-
-```
-PC 꺼짐: 링크 수집 ✅ → GitHub 저장 ✅ → Telegram 답장 ✅ → Obsidian ❌ (대기)
-PC 켜짐: Sync Daemon 자동 시작 → 밀린 노트 전부 동기화 → Obsidian ✅ → 모바일 ✅
-```
+- 수집된 노트는 **유실되지 않습니다** (GitHub에 안전하게 보관)
+- `git pull` 한 번이면 밀린 노트가 **한꺼번에 동기화**됩니다
+- Telegram에서 분류 결과는 즉시 확인할 수 있습니다
 
 ## 비용
 

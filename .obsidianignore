@@ -1,0 +1,8 @@
+# 코드 및 설정 파일 (Obsidian에서 숨김)
+api/
+.git/
+.gitignore
+.obsidianignore
+vercel.json
+requirements.txt
+README.md
