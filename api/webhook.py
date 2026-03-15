@@ -96,20 +96,28 @@ def detect_platform(url):
 
 # ── 콘텐츠 추출 (범용 OG 태그) ───────────────────────
 def fetch_page(url, retries=2):
-    """URL에서 HTML 가져오기 (리다이렉트 + 재시도)"""
+    """URL에서 HTML 가져오기 (쿠키 + 브라우저 헤더 + 재시도)"""
+    import http.cookiejar
+    cj = http.cookiejar.CookieJar()
+    opener = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(cj))
+
     agents = [
-        "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
-        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
         "facebookexternalhit/1.1 (+http://www.facebook.com/externalhit_uatext.php)",
+        "Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)",
     ]
     for i in range(retries + 1):
         try:
             req = urllib.request.Request(url, headers={
                 "User-Agent": agents[i % len(agents)],
-                "Accept-Language": "ko-KR,ko;q=0.9,en;q=0.8",
+                "Accept-Language": "en-US,en;q=0.9,ko-KR;q=0.8,ko;q=0.7",
                 "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+                "Sec-Fetch-Dest": "document",
+                "Sec-Fetch-Mode": "navigate",
+                "Sec-Fetch-Site": "none",
+                "Upgrade-Insecure-Requests": "1",
             })
-            with urllib.request.urlopen(req, timeout=15) as resp:
+            with opener.open(req, timeout=15) as resp:
                 return resp.read(500_000).decode("utf-8", errors="ignore")
         except urllib.error.HTTPError as e:
             if e.code == 403 and i < retries:
@@ -122,18 +130,18 @@ def extract_content(url):
     raw = fetch_page(url)
 
     og = {}
-    # OG + Twitter 메타 태그
+    # 범용 OG/Twitter 메타 태그 파싱 (data-rh 등 추가 속성 허용)
     for match in re.finditer(
-        r'<meta\s+(?:property|name)="(og|twitter):(\w+)"\s+content="([^"]*?)"', raw
+        r'<meta\s+[^>]*?(?:property|name)="(og|twitter):(\w+)"[^>]*?content="([^"]*?)"', raw
     ):
         key = f"{match.group(1)}:{match.group(2)}"
         og[key] = html.unescape(match.group(3))
-    # content가 앞에 오는 패턴도 처리
     for match in re.finditer(
-        r'<meta\s+content="([^"]*?)"\s+(?:property|name)="(og|twitter):(\w+)"', raw
+        r'<meta\s+[^>]*?content="([^"]*?)"[^>]*?(?:property|name)="(og|twitter):(\w+)"', raw
     ):
         key = f"{match.group(2)}:{match.group(3)}"
-        og[key] = html.unescape(match.group(1))
+        if key not in og:
+            og[key] = html.unescape(match.group(1))
 
     title = og.get("og:title", "") or og.get("twitter:title", "")
     description = og.get("og:description", "") or og.get("twitter:description", "")
