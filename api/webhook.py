@@ -196,11 +196,12 @@ def save_to_github(post, classification):
     category = classification.get("category", "기타")
     folder = CATEGORY_FOLDER_MAP.get(category, "misc")
     summary = classification.get("summary", "untitled")
-    # 파일명은 ID + 플랫폼으로 (ASCII-safe, 한글 경로 문제 방지)
-    content_id = post.get("id", hashlib.md5(post["postUrl"].encode()).hexdigest()[:10])
     platform = post.get("platform", "web")
     date_str = datetime.utcnow().strftime("%Y-%m-%d")
-    filepath = f"obsidian-vault/threads-archive/{folder}/{date_str}-{platform}-{content_id}.md"
+    # 파일명: 날짜-요약제목 (한글 포함, GitHub API용 UTF-8 인코딩)
+    slug = re.sub(r"[\\/:*?\"<>|]", "", summary)  # 파일시스템 금지 문자만 제거
+    slug = re.sub(r"\s+", " ", slug.strip())[:50] or "untitled"
+    filepath = f"obsidian-vault/threads-archive/{folder}/{date_str}-{slug}.md"
 
     tags_yaml = json.dumps(classification.get("tags", []), ensure_ascii=False)
     platform = post.get("platform", "web")
@@ -233,7 +234,8 @@ classified_at: "{datetime.utcnow().isoformat()}Z"
 [원본 보기]({post.get('postUrl', '')})
 """
 
-    api_url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{filepath}"
+    encoded_path = urllib.parse.quote(filepath, safe="/")
+    api_url = f"https://api.github.com/repos/{GITHUB_REPO}/contents/{encoded_path}"
     commit_msg = f"collect: [{platform}] {summary}"
     payload = json.dumps({
         "message": commit_msg,
