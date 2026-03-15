@@ -168,6 +168,21 @@ WshShell.Run "pythonw.exe ""C:\Users\<user>\.threads-collector\sync_daemon.pyw""
 
 PC를 켤 때 자동으로 시작되며, Obsidian Sync가 있으면 모바일까지 동기화됩니다.
 
+## 알려진 제한사항
+
+**Obsidian 동기화에는 PC가 켜져 있어야 합니다.**
+
+Telegram으로 링크를 보내면 수집, 분류, GitHub 저장, Telegram 답장은 **24시간 즉시 동작**합니다 (Vercel 서버리스). 하지만 GitHub에 저장된 노트를 Obsidian vault로 가져오는 Sync Daemon은 **로컬 PC에서 실행되므로, PC가 꺼져 있으면 Obsidian에 반영되지 않습니다.**
+
+- PC가 꺼져 있는 동안 수집된 노트는 **유실되지 않습니다** (GitHub에 안전하게 보관)
+- PC를 켜면 Sync Daemon이 자동 시작되어 **밀린 노트를 한꺼번에 동기화**합니다
+- Telegram에서 분류 결과는 PC 상태와 무관하게 즉시 확인할 수 있습니다
+
+```
+PC 꺼짐: 링크 수집 ✅ → GitHub 저장 ✅ → Telegram 답장 ✅ → Obsidian ❌ (대기)
+PC 켜짐: Sync Daemon 자동 시작 → 밀린 노트 전부 동기화 → Obsidian ✅ → 모바일 ✅
+```
+
 ## 비용
 
 | 항목 | 비용 |
