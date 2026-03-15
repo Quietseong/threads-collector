@@ -117,29 +117,37 @@ https://api.telegram.org/bot<BOT_TOKEN>/setWebhook?url=https://<your-app>.vercel
 아무 폴더에 (예: `C:\Users\<user>\.threads-collector\`) `sync_daemon.pyw` 파일을 만듭니다:
 
 ```python
-import json, os, sys, time, urllib.request, urllib.parse
+import json, os, sys, time, logging, urllib.request, urllib.parse
 
 VAULT_DIR = r"<Obsidian vault 경로>\threads-archive"  # 수정
 REPO = "<username>/<repo-name>"                        # 수정
 PREFIX = "obsidian-vault/threads-archive/"
 INTERVAL = 300  # 5분
 
+LOG_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sync.log")
+logging.basicConfig(
+    filename=LOG_FILE, level=logging.INFO,
+    format="%(asctime)s %(levelname)s %(message)s", datefmt="%Y-%m-%d %H:%M",
+)
+
 def sync_once():
-    try:
-        req = urllib.request.Request(
-            f"https://api.github.com/repos/{REPO}/git/trees/main?recursive=1",
-            headers={"User-Agent": "sync"},
-        )
-        with urllib.request.urlopen(req, timeout=15) as resp:
-            tree = json.loads(resp.read().decode("utf-8"))
-        for item in tree.get("tree", []):
-            path = item.get("path", "")
-            if not path.startswith(PREFIX) or not path.endswith(".md"):
-                continue
-            rel = path[len(PREFIX):]
-            local = os.path.join(VAULT_DIR, rel)
-            if os.path.exists(local):
-                continue
+    req = urllib.request.Request(
+        f"https://api.github.com/repos/{REPO}/git/trees/main?recursive=1",
+        headers={"User-Agent": "sync"},
+    )
+    with urllib.request.urlopen(req, timeout=15) as resp:
+        tree = json.loads(resp.read().decode("utf-8"))
+
+    synced = 0
+    for item in tree.get("tree", []):
+        path = item.get("path", "")
+        if not path.startswith(PREFIX) or not path.endswith(".md"):
+            continue
+        rel = path[len(PREFIX):]
+        local = os.path.join(VAULT_DIR, rel)
+        if os.path.exists(local):
+            continue
+        try:
             os.makedirs(os.path.dirname(local), exist_ok=True)
             encoded = "/".join(urllib.parse.quote(s, safe="") for s in path.split("/"))
             raw_url = f"https://raw.githubusercontent.com/{REPO}/main/{encoded}"
@@ -147,13 +155,21 @@ def sync_once():
                 content = r.read()
             with open(local, "wb") as f:
                 f.write(content)
-    except Exception:
-        pass
+            synced += 1
+            logging.info(f"synced: {rel}")
+        except Exception as e:
+            logging.error(f"failed: {rel} - {e}")
+    if synced:
+        logging.info(f"total synced: {synced} files")
 
 if __name__ == "__main__":
     os.makedirs(VAULT_DIR, exist_ok=True)
+    logging.info("daemon started")
     while True:
-        sync_once()
+        try:
+            sync_once()
+        except Exception as e:
+            logging.error(f"sync error: {e}")
         time.sleep(INTERVAL)
 ```
 
