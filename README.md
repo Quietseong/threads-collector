@@ -111,7 +111,7 @@ https://api.telegram.org/bot<BOT_TOKEN>/setWebhook?url=https://<your-app>.vercel
 
 이 레포를 Obsidian 보관함으로 직접 사용합니다. `.obsidianignore` 파일이 포함되어 있어 코드 파일(`api/`, `vercel.json` 등)은 Obsidian에서 자동으로 숨겨집니다.
 
-#### 초기 설정
+#### PC 초기 설정
 
 1. 이 레포를 clone합니다:
    ```bash
@@ -128,18 +128,29 @@ https://api.telegram.org/bot<BOT_TOKEN>/setWebhook?url=https://<your-app>.vercel
      - **Disable push**: `true` (이 보관함은 읽기 전용, push 불필요)
 
 4. (Obsidian Sync 사용 시) Sync 설정에서 **제외 폴더**에 `.git` 추가
+   - `.git`은 기기마다 별도로 관리해야 하므로 Sync에서 제외합니다
+
+#### 모바일 초기 설정
+
+Obsidian Sync가 PC의 보관함을 모바일에 전파한 뒤, 모바일에서 Git을 별도로 초기화합니다.
+
+1. 모바일 Obsidian에서 보관함이 동기화된 것을 확인
+2. Obsidian Git 플러그인 설정 → **Clone an existing remote repo** 실행
+   - 플러그인이 내장 isomorphic-git을 사용하므로 별도 git 설치 불필요
+   - 레포 URL과 GitHub Personal Access Token 입력
+3. 이후 모바일에서도 앱을 열 때마다 auto-pull 동작
 
 #### 동기화 흐름
 
 ```
 텔레그램으로 링크 전송 → GitHub에 자동 저장 (즉시)
         ↓
-Obsidian 앱 열기 → Git 플러그인이 auto-pull → 새 노트 반영
+아무 기기에서 Obsidian 열기 → Git 플러그인이 auto-pull → 새 노트 반영
         ↓
-Obsidian Sync → 다른 기기에 자동 전파 (모바일 포함)
+Obsidian Sync → 나머지 기기에 자동 전파
 ```
 
-PC, 모바일 어디서든 Obsidian을 열기만 하면 새 노트가 동기화됩니다.
+한 기기에서 pull하면 Obsidian Sync가 나머지 기기에 .md 파일을 전파합니다.
 
 ## 알려진 제한사항
 
