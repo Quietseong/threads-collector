@@ -226,7 +226,7 @@ def save_to_github(post, classification):
     # 파일명: 날짜-요약제목 (한글 포함, GitHub API용 UTF-8 인코딩)
     slug = re.sub(r"[\\/:*?\"<>|]", "", summary)  # 파일시스템 금지 문자만 제거
     slug = re.sub(r"\s+", " ", slug.strip())[:50] or "untitled"
-    filepath = f"obsidian-vault/threads-archive/{folder}/{date_str}-{slug}.md"
+    filepath = f"AI/threads-archive/{folder}/{date_str}-{slug}.md"
 
     tags_yaml = json.dumps(classification.get("tags", []), ensure_ascii=False)
     platform = post.get("platform", "web")
