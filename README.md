@@ -109,34 +109,48 @@ https://api.telegram.org/bot<BOT_TOKEN>/setWebhook?url=https://<your-app>.vercel
 
 ### 5. Obsidian 동기화 (선택)
 
-**GitHub Gitless Sync** 플러그인으로 GitHub의 노트를 Obsidian에 자동 동기화합니다. git 설치 없이 GitHub API로 직접 동기화하므로 PC/모바일 모두 동일하게 동작합니다.
+**Obsidian Git** 플러그인으로 GitHub의 노트를 Obsidian에 자동 동기화합니다.
 
-#### 설정 방법 (PC/모바일 공통)
+#### PC 설정
 
-1. Obsidian에서 보관함 생성 (또는 Obsidian Sync로 기존 보관함 연결)
+1. Obsidian에서 보관함 생성
+2. 터미널에서 보관함 폴더에 repo clone:
+   ```bash
+   cd /path/to/vault
+   git clone https://github.com/<username>/threads-collector.git .
+   ```
+3. **Obsidian Git** 플러그인 설치:
+   - 설정 → 커뮤니티 플러그인 → 탐색 → "Obsidian Git" 검색 → 설치
 
-2. **GitHub Gitless Sync** 플러그인 설치:
-   - 설정 → 커뮤니티 플러그인 → 탐색 → "GitHub Gitless Sync" 검색 → 설치
-   - 플러그인 설정:
-     - **GitHub token**: GitHub Personal Access Token
-     - **Owner**: GitHub 사용자명
-     - **Repository**: `threads-collector`
-     - **Branch**: `main`
-     - **Sync strategy**: pull only (읽기 전용)
+#### 모바일 설정
 
-3. Sync 버튼을 누르거나, 앱 열 때 자동으로 새 노트를 가져옵니다
+1. Obsidian에서 **빈 보관함** 생성
+2. **Obsidian Git** 플러그인 설치
+3. 플러그인 설정에서 인증 정보 입력:
+   - **Username**: GitHub 사용자명
+   - **Password/Personal access token**: GitHub Personal Access Token
+4. 명령어 팔레트 → **"Git: Clone an existing remote repo"** 실행:
+   - URL: `https://github.com/<username>/threads-collector.git`
+   - depth: `1` (최신 커밋만 가져옴, 가볍고 빠름)
+   - 폴더명: 비워두기
+
+#### 추천 설정 (읽기 전용)
+
+| 설정 | 값 | 설명 |
+|------|-----|------|
+| Auto commit interval | `0` | 끄기 (읽기만 할 경우) |
+| Auto pull interval | `5` 또는 `10` | 주기적으로 새 노트 가져오기 |
+| Pull on startup | ON | 앱 열 때 자동 pull |
 
 #### 동기화 흐름
 
 ```
 텔레그램으로 링크 전송 → GitHub에 자동 저장 (즉시)
         ↓
-아무 기기에서 Obsidian 열기 → Gitless Sync가 새 노트 가져오기
+아무 기기에서 Obsidian 열기 → Obsidian Git이 auto-pull
         ↓
 Obsidian Sync → 나머지 기기에 자동 전파
 ```
-
-git clone이 필요 없으므로 모바일에서도 바로 설정할 수 있습니다.
 
 ## 알려진 제한사항
 
