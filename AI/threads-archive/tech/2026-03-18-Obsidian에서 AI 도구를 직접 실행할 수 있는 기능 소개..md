@@ -4,7 +4,7 @@ source: threads
 author: "@aisolutiondev"
 category: "개발/기술"
 subcategory: "AI 도구"
-tags: ["Obsidian", "Claude", "Gemini", "Codex", "자연어 IDE"]
+tags: ["Obsidian", "Claude", "Gemini", "Codex", "자연어IDE"]
 confidence: 0.9
 original_url: "https://www.threads.com/@aisolutiondev/post/DV-iL8wFKwP"
 collected_at: "2026-03-18T13:43:46.043916Z"

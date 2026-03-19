@@ -4,7 +4,7 @@ source: threads
 author: "@feelfree_ai"
 category: "도구/리소스"
 subcategory: "웹 스크래핑 도구"
-tags: ["Crawl4AI", "LLM", "오픈소스", "웹 스크래퍼", "데이터 전처리"]
+tags: ["Crawl4AI", "LLM", "오픈소스", "웹스크래퍼", "데이터전처리"]
 confidence: 0.9
 original_url: "https://www.threads.com/@feelfree_ai/post/DVCg-KHiq0O"
 collected_at: "2026-03-15T13:41:18.420834Z"

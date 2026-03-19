@@ -4,7 +4,7 @@ source: threads
 author: ""
 category: "개발/기술"
 subcategory: "AI 도구"
-tags: ["Claude Code", "Gemini", "Codex", "AI 플러그인", "Octopus"]
+tags: ["ClaudeCode", "Gemini", "Codex", "AI플러그인", "Octopus"]
 confidence: 0.9
 original_url: "https://www.threads.com/@unclejobs.ai/post/DWAlIeJiUsx"
 collected_at: "2026-03-18T21:22:05.780267Z"

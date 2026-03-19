@@ -4,7 +4,7 @@ source: threads
 author: ""
 category: "개발/기술"
 subcategory: "AI 및 머신러닝"
-tags: ["AI", "파인튜닝", "Unsloth Studio", "자동 데이터셋 생성", "오픈소스"]
+tags: ["AI", "파인튜닝", "UnslothStudio", "자동데이터셋생성", "오픈소스"]
 confidence: 0.9
 original_url: "https://www.threads.com/@choi.openai/post/DV_1JfbD-NU"
 collected_at: "2026-03-18T13:38:12.650349Z"

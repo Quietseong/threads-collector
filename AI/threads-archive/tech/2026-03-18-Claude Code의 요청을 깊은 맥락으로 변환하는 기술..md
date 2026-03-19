@@ -4,7 +4,7 @@ source: github
 author: ""
 category: "개발/기술"
 subcategory: "AI 및 머신러닝"
-tags: ["GitHub", "Claude Code", "Context Reframing", "AI 기술"]
+tags: ["GitHub", "ClaudeCode", "ContextReframing", "AI기술"]
 confidence: 0.9
 original_url: "https://github.com/robinade/context-reframing"
 collected_at: "2026-03-18T13:42:54.120563Z"

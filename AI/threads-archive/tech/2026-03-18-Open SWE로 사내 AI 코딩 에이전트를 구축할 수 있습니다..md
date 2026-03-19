@@ -4,7 +4,7 @@ source: threads
 author: "@feelfree_ai"
 category: "개발/기술"
 subcategory: "AI 코딩 에이전트"
-tags: ["Open SWE", "LangChain", "AI", "코딩", "오픈소스"]
+tags: ["OpenSWE", "LangChain", "AI", "코딩", "오픈소스"]
 confidence: 0.9
 original_url: "https://www.threads.com/@feelfree_ai/post/DV__b5iiJ9d"
 collected_at: "2026-03-18T21:22:42.293265Z"

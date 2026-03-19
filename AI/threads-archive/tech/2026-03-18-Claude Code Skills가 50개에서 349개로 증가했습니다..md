@@ -4,7 +4,7 @@ source: threads
 author: "@aisolutiondev"
 category: "개발/기술"
 subcategory: "AI 및 코드 스킬"
-tags: ["Claude Code Skills", "AI", "개발", "코드", "기술"]
+tags: ["ClaudeCodeSkills", "AI", "개발", "코드", "기술"]
 confidence: 0.9
 original_url: "https://www.threads.com/@aisolutiondev/post/DWCANFSCYrJ"
 collected_at: "2026-03-18T21:19:26.877158Z"

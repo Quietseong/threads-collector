@@ -4,7 +4,7 @@ source: threads
 author: "@aisolutiondev"
 category: "도구/리소스"
 subcategory: "AI 도구"
-tags: ["Claude Code", "AI", "툴킷", "개발", "인프라"]
+tags: ["ClaudeCode", "AI", "툴킷", "개발", "인프라"]
 confidence: 0.9
 original_url: "https://www.threads.com/@aisolutiondev/post/DV1HxWDCfO4"
 collected_at: "2026-03-17T05:29:39.156371Z"

@@ -4,7 +4,7 @@ source: threads
 author: "@human__bro"
 category: "커리어"
 subcategory: "AI 교육"
-tags: ["AI", "Claude AI", "무료 강의", "커리큘럼", "Anthropic"]
+tags: ["AI", "ClaudeAI", "무료강의", "커리큘럼", "Anthropic"]
 confidence: 0.9
 original_url: "https://www.threads.com/@human__bro/post/DV5rjzXEgpP"
 collected_at: "2026-03-15T13:43:37.084998Z"

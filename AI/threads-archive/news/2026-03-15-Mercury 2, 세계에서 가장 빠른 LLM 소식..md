@@ -4,7 +4,7 @@ source: threads
 author: "@hyperexecutor"
 category: "뉴스/트렌드"
 subcategory: "AI 기술 발전"
-tags: ["Hyper Executor", "Mercury 2", "LLM", "AI", "추론 속도"]
+tags: ["HyperExecutor", "Mercury2", "LLM", "AI", "추론속도"]
 confidence: 0.9
 original_url: "https://www.threads.com/@hyperexecutor/post/DVLwb0MjrkF"
 collected_at: "2026-03-15T13:39:32.495368Z"

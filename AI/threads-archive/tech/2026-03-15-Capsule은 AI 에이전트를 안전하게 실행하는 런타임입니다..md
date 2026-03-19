@@ -4,7 +4,7 @@ source: threads
 author: "@iam_mychan"
 category: "개발/기술"
 subcategory: "AI 에이전트 런타임"
-tags: ["Capsule", "WebAssembly", "AI agent", "런타임", "개발 도구"]
+tags: ["Capsule", "WebAssembly", "AIagent", "런타임", "개발도구"]
 confidence: 0.9
 original_url: "https://www.threads.com/@iam_mychan/post/DV56rtZkjm2"
 collected_at: "2026-03-15T13:33:06.378030Z"

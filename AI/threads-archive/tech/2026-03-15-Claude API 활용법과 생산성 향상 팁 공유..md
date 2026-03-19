@@ -4,7 +4,7 @@ source: threads
 author: ""
 category: "개발/기술"
 subcategory: "API 활용"
-tags: ["Claude API", "앤트로픽", "생산성", "꿀팁"]
+tags: ["ClaudeAPI", "앤트로픽", "생산성", "꿀팁"]
 confidence: 0.9
 original_url: "https://www.threads.com/@choi.openai/post/DVGboEZDxXX/"
 collected_at: "2026-03-15T13:40:26.799792Z"

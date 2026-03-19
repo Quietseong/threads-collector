@@ -4,7 +4,7 @@ source: threads
 author: ""
 category: "뉴스/트렌드"
 subcategory: "AI 기술 동향"
-tags: ["Claude Code", "Anthropic", "AI 스킬", "정보 전달", "Thariq"]
+tags: ["ClaudeCode", "Anthropic", "AI스킬", "정보전달", "Thariq"]
 confidence: 0.9
 original_url: "https://www.threads.com/@unclejobs.ai/post/DWASysgE2MH/"
 collected_at: "2026-03-18T13:44:09.143400Z"

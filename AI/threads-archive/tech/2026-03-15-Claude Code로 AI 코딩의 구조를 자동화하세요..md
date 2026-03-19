@@ -4,7 +4,7 @@ source: threads
 author: "@aisolutiondev"
 category: "개발/기술"
 subcategory: "AI 코딩 도구"
-tags: ["Claude Code", "AI 코딩", "오픈소스", "자동화", "개발 사이클"]
+tags: ["ClaudeCode", "AI코딩", "오픈소스", "자동화", "개발사이클"]
 confidence: 0.9
 original_url: "https://www.threads.com/@aisolutiondev/post/DV50be8EWfL"
 collected_at: "2026-03-15T13:25:02.096681Z"

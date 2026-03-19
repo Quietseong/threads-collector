@@ -4,7 +4,7 @@ source: linkedin
 author: ""
 category: "개발/기술"
 subcategory: "AI 시뮬레이션"
-tags: ["MiroFish", "AI", "예측 엔진", "시뮬레이션", "GitHub"]
+tags: ["MiroFish", "AI", "예측엔진", "시뮬레이션", "GitHub"]
 confidence: 0.9
 original_url: "https://kr.linkedin.com/posts/sangkwun_mirofish%EB%9D%BC%EB%8A%94-ai-%EC%98%88%EC%B8%A1-%EC%97%94%EC%A7%84%EC%9D%B4-github-%ED%8A%B8%EB%A0%8C%EB%94%A9-1%EC%9C%84%EB%A5%BC-%EC%B0%8D%EC%97%88%EA%B8%B8%EB%9E%98-activity-7439255821202477056-0ojs"
 collected_at: "2026-03-17T05:34:55.451385Z"

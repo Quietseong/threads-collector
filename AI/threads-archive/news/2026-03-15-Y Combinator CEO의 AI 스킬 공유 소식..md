@@ -4,7 +4,7 @@ source: threads
 author: "@aicoffeechat"
 category: "뉴스/트렌드"
 subcategory: "AI 기술"
-tags: ["AI", "Y Combinator", "워크플로우", "Claude Code", "스킬"]
+tags: ["AI", "YCombinator", "워크플로우", "ClaudeCode", "스킬"]
 confidence: 0.9
 original_url: "https://www.threads.com/@aicoffeechat/post/DVzorbkk52n"
 collected_at: "2026-03-15T13:34:50.146522Z"

@@ -58,7 +58,7 @@ SYSTEM_PROMPT = f"""당신은 웹 콘텐츠 분류 전문가입니다.
 ## 응답 규칙
 - category: 위 목록 중 하나
 - subcategory: 세부 주제 (자유 생성)
-- tags: 핵심 키워드 3-5개 (고유명사는 원어 유지)
+- tags: 핵심 키워드 3-5개 (고유명사는 원어 유지, 반드시 띄어쓰기 없이 한 단어로 작성. 예: "ClaudeCode", "프로젝트관리", "데이터추출")
 - summary: 30-50자 한줄 요약 (한국어)
 - confidence: 0.0-1.0
 
@@ -228,7 +228,9 @@ def save_to_github(post, classification):
     slug = re.sub(r"\s+", " ", slug.strip())[:50] or "untitled"
     filepath = f"AI/threads-archive/{folder}/{date_str}-{slug}.md"
 
-    tags_yaml = json.dumps(classification.get("tags", []), ensure_ascii=False)
+    raw_tags = classification.get("tags", [])
+    sanitized_tags = [re.sub(r"\s+", "", t) for t in raw_tags]
+    tags_yaml = json.dumps(sanitized_tags, ensure_ascii=False)
     platform = post.get("platform", "web")
     author_line = f"{post.get('author', '')} " if post.get("author") else ""
     site_line = f"({post.get('siteName', '')})" if post.get("siteName") else ""

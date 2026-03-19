@@ -4,7 +4,7 @@ source: threads
 author: "@softdaddy_o"
 category: "개발/기술"
 subcategory: "AI 도구 및 자동화"
-tags: ["Karpathy", "autoresearch", "Claude Code", "AI", "자동화"]
+tags: ["Karpathy", "autoresearch", "ClaudeCode", "AI", "자동화"]
 confidence: 0.9
 original_url: "https://www.threads.com/@softdaddy_o/post/DVzwcwYgQUv"
 collected_at: "2026-03-15T13:34:35.707333Z"

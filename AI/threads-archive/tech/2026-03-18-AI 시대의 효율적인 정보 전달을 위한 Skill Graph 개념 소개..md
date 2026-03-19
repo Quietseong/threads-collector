@@ -4,7 +4,7 @@ source: threads
 author: ""
 category: "개발/기술"
 subcategory: "AI 및 스킬 관리"
-tags: ["AI", "Skill Graph", "옵시디언", "지식 관리", "스킬 시스템"]
+tags: ["AI", "SkillGraph", "옵시디언", "지식관리", "스킬시스템"]
 confidence: 0.9
 original_url: "https://www.threads.com/@unclejobs.ai/post/DWAoETiiZ4y"
 collected_at: "2026-03-18T13:39:28.834028Z"

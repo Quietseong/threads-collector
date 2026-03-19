@@ -4,7 +4,7 @@ source: huggingface
 author: ""
 category: "개발/기술"
 subcategory: "인공지능/데이터 생성"
-tags: ["Synthetic Data", "Hugging Face", "AI", "Token Generation"]
+tags: ["SyntheticData", "HuggingFace", "AI", "TokenGeneration"]
 confidence: 0.9
 original_url: "https://huggingface.co/spaces/HuggingFaceFW/finephrase"
 collected_at: "2026-03-15T10:33:06.233530Z"
